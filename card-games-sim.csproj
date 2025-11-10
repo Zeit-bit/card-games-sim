@@ -8,6 +8,5 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Cards/Poker/" />
-    <Folder Include="Cards/Uno/" />
   </ItemGroup>
 </Project>
