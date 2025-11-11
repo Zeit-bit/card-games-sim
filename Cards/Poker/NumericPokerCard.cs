@@ -4,7 +4,7 @@ namespace card_games_sim.Cards.Poker;
 
 public class NumericPokerCard : PokerStandardCard
 {
-  public int Value { get; init; }
+  public int Value { get; private init; }
 
   public NumericPokerCard(int value, PokerCardSuits suit)
   : base(suit)

@@ -12,7 +12,7 @@ public class PokerFaceCard : PokerStandardCard
     Ace
   }
 
-  public FaceRank Rank { get; init; }
+  public FaceRank Rank { get; private init; }
 
   public PokerFaceCard( FaceRank rank, PokerCardSuits suit)
   : base(suit)
