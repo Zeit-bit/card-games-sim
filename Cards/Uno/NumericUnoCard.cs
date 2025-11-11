@@ -8,20 +8,26 @@ public class NumericUnoCard : UnoCard
   public int Value
   {
     get { return _value; }
-    init { _value = value; }
+    init
+    {
+      if (value < 0 || value > 9)
+        throw new Exception("Uno card numeric values must only be from 0 to 9");
+
+      _value = value;
+    }
   }
 
   public NumericUnoCard(int value, UnoCardColors color)
-  : base(color)
+    : base(color)
   {
     Value = value;
   }
 
-  protected override string GenerateCardName()
+  public virtual override string Name
   {
-    return $"{this.Value} {this.CardColor}";
+    get { return $"{this.Value} {this.CardColor}"; }
   }
-  
+
   public override bool Matches(UnoCard other) //true if same color or same value
   {
     if (this.CardColor == other.CardColor)

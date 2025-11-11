@@ -9,13 +9,13 @@ public class PokerFaceCard : PokerStandardCard
     Jack,
     Queen,
     King,
-    Ace
+    Ace,
   }
 
   public FaceRank Rank { get; private init; }
 
-  public PokerFaceCard( FaceRank rank, PokerCardSuits suit)
-  : base(suit)
+  public PokerFaceCard(FaceRank rank, PokerCardSuits suit)
+    : base(suit)
   {
     Rank = rank;
   }

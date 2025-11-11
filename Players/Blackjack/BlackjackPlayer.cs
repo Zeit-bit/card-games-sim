@@ -19,7 +19,7 @@ public class BlackjackPlayer : Player
     {
       if (card is not PokerCard pokerCard)
         throw new Exception("Blackjack solo usa PokerCards.");
-      
+
       int value = rule.GetCardValue(pokerCard);
       total += value;
 
@@ -37,7 +37,7 @@ public class BlackjackPlayer : Player
     HandValue = total;
     return HandValue;
   }
-    
+
   public override void Play(Game game)
   {
     throw new NotImplementedException();

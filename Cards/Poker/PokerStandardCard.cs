@@ -9,30 +9,24 @@ public abstract class PokerStandardCard : PokerCard
     Hearts,
     Diamonds,
     Spades,
-    Clubs
+    Clubs,
   }
 
   public enum PokerCardColors
   {
     Red,
-    Black
+    Black,
   }
 
-  private PokerCardSuits _cardSuit;
-  public PokerCardSuits CardSuit
-  {
-    get { return _cardSuit; }
-    private set
-    {
-      _cardSuit = value;
-    }
-  }
+  public PokerCardSuits CardSuit { get; init; }
 
   public PokerCardColors CardColor
   {
     get
     {
-      return (CardSuit == PokerCardSuits.Hearts || CardSuit == PokerCardSuits.Diamonds) ? PokerCardColors.Red : PokerCardColors.Black;
+      return (CardSuit == PokerCardSuits.Hearts || CardSuit == PokerCardSuits.Diamonds)
+        ? PokerCardColors.Red
+        : PokerCardColors.Black;
     }
   }
 
