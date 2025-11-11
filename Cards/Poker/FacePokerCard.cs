@@ -20,9 +20,9 @@ public class PokerFaceCard : PokerStandardCard
     Rank = rank;
   }
 
-  protected override string GenerateCardName()
+  public virtual override string Name
   {
-    return $"{Rank} of {CardSuit}";
+    get { return $"{Rank} of {CardSuit}"; }
   }
 
   public override void Play()
