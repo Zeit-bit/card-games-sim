@@ -15,7 +15,7 @@ public class NumericPokerCard : PokerStandardCard
     Value = value;
   }
 
-  public virtual override string Name
+  public override string Name
   {
     get { return $"{Value} of {CardSuit}"; }
   }
