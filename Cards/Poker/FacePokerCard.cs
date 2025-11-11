@@ -20,7 +20,7 @@ public class PokerFaceCard : PokerStandardCard
     Rank = rank;
   }
 
-  public virtual override string Name
+  public override string Name
   {
     get { return $"{Rank} of {CardSuit}"; }
   }

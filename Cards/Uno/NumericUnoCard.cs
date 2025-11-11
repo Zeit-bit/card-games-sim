@@ -23,7 +23,7 @@ public class NumericUnoCard : UnoCard
     Value = value;
   }
 
-  public virtual override string Name
+  public override string Name
   {
     get { return $"{this.Value} {this.CardColor}"; }
   }

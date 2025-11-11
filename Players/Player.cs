@@ -16,7 +16,7 @@ public abstract class Player
       _name = value;
     }
   }
-  public List<Card> Hand { get; private init; } = Hand = new List<Card>();
+  public List<Card> Hand { get; private init; } = new List<Card>();
 
   public Player(string name)
   {
