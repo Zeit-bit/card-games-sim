@@ -8,8 +8,12 @@ namespace card_games_sim.Players;
 public class BlackjackDealer : BlackjackPlayer, IShuffler, IDealer
 {
   public BlackjackDealer(string name)
-    : base(name) { }
+    : base(name)
+  {
+    PointOfCut = 17;
+  }
 
+  private int PointOfCut { get; set; }
   public Card Upcard
   {
     get { return Hand.First(card => card.FaceUp == true); }
@@ -17,7 +21,7 @@ public class BlackjackDealer : BlackjackPlayer, IShuffler, IDealer
 
   public override void Play(Game game)
   {
-    base.Play(game);
+    Play(PointOfCut, game);
   }
 
   public void ShuffleCards(Deck deck)

@@ -32,7 +32,7 @@ public class BlackjackGame : Game
     }
   }
   private int CurrentRound { get; set; }
-  private Deck Deck { get; set; }
+  public Deck Deck { get; set; }
 
   public BlackjackGame(int rounds, BlackjackPlayer[] players)
   {
