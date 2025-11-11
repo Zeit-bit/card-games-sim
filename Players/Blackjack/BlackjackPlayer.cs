@@ -10,6 +10,7 @@ public class BlackjackPlayer : Player
 
   public int Victories { get; set; }
   public int HandValue { get; private set; }
+  protected bool ShouldPlay { get; set; } = true;
 
   public int CalculateHandValue(ICardValueRule rule)
   {
@@ -43,7 +44,7 @@ public class BlackjackPlayer : Player
   {
     while (ShouldPlay)
     {
-      if (Value > 21)
+      if (HandValue > 21)
       {
         Console.WriteLine($"{Name} busted");
         break;
@@ -64,12 +65,12 @@ public class BlackjackPlayer : Player
   {
     while (ShouldPlay)
     {
-      if (Value > 21)
+      if (HandValue > 21)
       {
         Console.WriteLine($"{Name} busted");
         break;
       }
-      if (Value >= pointOfCut)
+      if (HandValue >= pointOfCut)
       {
         Stand();
         break;

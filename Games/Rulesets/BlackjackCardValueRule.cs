@@ -1,5 +1,3 @@
-using System;
-
 namespace card_games_sim.Games.Rulesets;
 
 public class BlackjackCardValueRule : ICardValueRuleSet
