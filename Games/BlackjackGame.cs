@@ -14,7 +14,7 @@ public class BlackjackGame : Game
       if (value.Length <= 0)
         throw new Exception("A minimum of 1 player is necessary");
       if (value.Length > 8)
-        throw new Exception("There can only be 8 players");
+        throw new Exception("There can only be up to 8 players");
 
       _players = (BlackjackPlayer[])value;
     }
