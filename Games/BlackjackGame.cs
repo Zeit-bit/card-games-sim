@@ -14,7 +14,7 @@ public class BlackjackGame : Game
       if (value.Length <= 0)
         throw new Exception("A minimum of 1 player is necessary");
       if (value.Length > 8)
-        throw new Exception("There can only be 8 players");
+        throw new Exception("There can only be up to 8 players");
 
       _players = (BlackjackPlayer[])value;
     }
@@ -66,14 +66,14 @@ public class BlackjackGame : Game
     Console.WriteLine("Assigning payouts");
     foreach (var player in (BlackjackPlayer[])Players)
     {
-      if (player.Value > 21)
+      if (player.HandValue > 21)
       {
         Console.WriteLine($"{player.Name} busted");
         continue;
       }
-      if (Dealer.Value > 21 && player.Value < 21)
+      if (Dealer.HandValue > 21 && player.HandValue < 21)
         player.Victories++;
-      if (player.Value > Dealer.Value)
+      if (player.HandValue > Dealer.HandValue)
         player.Victories++;
       Console.WriteLine($"{player.Name} wins the round");
     }
