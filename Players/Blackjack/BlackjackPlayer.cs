@@ -1,6 +1,7 @@
 using card_games_sim.Cards;
 using card_games_sim.Cards.Poker;
 using card_games_sim.Games;
+using card_games_sim.Games.Rulesets;
 using card_games_sim.Interfaces;
 
 namespace card_games_sim.Players;
@@ -14,7 +15,7 @@ public class BlackjackPlayer : Player
   public int HandValue { get; private set; }
   protected bool ShouldPlay { get; set; } = true;
 
-  public int CalculateHandValue(ICardValueRule rule)
+  public void CalculateHandValue(ICardValueRule rule)
   {
     int total = 0;
     int aceCount = 0;
@@ -39,11 +40,12 @@ public class BlackjackPlayer : Player
     }
 
     HandValue = total;
-    return HandValue;
   }
 
   public override void Play(Game game)
   {
+    CalculateHandValue(((BlackjackGame)game).RuleSet);
+
     while (ShouldPlay)
     {
       if (HandValue > 21)
@@ -54,7 +56,7 @@ public class BlackjackPlayer : Player
 
       int rnd = Random.Shared.Next(0, 2);
       if (rnd == 0)
-        Hit(((BlackjackGame)game).Deck);
+        Hit((BlackjackGame)game);
       else
       {
         Stand();
@@ -65,6 +67,8 @@ public class BlackjackPlayer : Player
 
   protected void Play(int pointOfCut, Game game)
   {
+    CalculateHandValue(((BlackjackGame)game).RuleSet);
+
     while (ShouldPlay)
     {
       if (HandValue > 21)
@@ -77,15 +81,16 @@ public class BlackjackPlayer : Player
         Stand();
         break;
       }
-      Hit(((BlackjackGame)game).Deck);
+      Hit((BlackjackGame)game);
     }
     ShouldPlay = true;
   }
 
-  protected void Hit(Deck deck)
+  protected void Hit(BlackjackGame blackjackGame)
   {
     Console.WriteLine($"{Name} hits");
-    AddCardToHand(deck.Cards.Pop());
+    AddCardToHand(blackjackGame.Deck.Cards.Pop());
+    CalculateHandValue(blackjackGame.RuleSet);
   }
 
   protected void Stand()

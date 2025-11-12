@@ -1,4 +1,5 @@
 using card_games_sim.Cards;
+using card_games_sim.Games.Rulesets;
 using card_games_sim.Players;
 
 namespace card_games_sim.Games;
@@ -34,12 +35,15 @@ public class BlackjackGame : Game
   private int CurrentRound { get; set; }
   public Deck Deck { get; set; }
 
+  public BlackjackCardValueRule RuleSet { get; private init; }
+
   public BlackjackGame(int rounds, BlackjackPlayer[] players)
   {
     Rounds = rounds;
     Players = players;
     Dealer = new BlackjackDealer("Dealer");
     CurrentRound = 1;
+    RuleSet = new BlackjackCardValueRule();
   }
 
   public override void Start()
@@ -49,7 +53,7 @@ public class BlackjackGame : Game
       Console.WriteLine($"Round: {CurrentRound}");
       Dealer.ShuffleCards(Deck);
       Dealer.DealCards(2, Deck, Players);
-      foreach (var player in (BlackjackPlayer[])Players)
+      foreach (var player in Players)
       {
         player.Play(this);
       }
@@ -69,6 +73,16 @@ public class BlackjackGame : Game
       if (player.HandValue > 21)
       {
         Console.WriteLine($"{player.Name} busted");
+        continue;
+      }
+      if (Dealer.HandValue > player.HandValue && Dealer.HandValue <= 21)
+      {
+        Console.WriteLine($"{player.Name} loses the round");
+        continue;
+      }
+      if (Dealer.HandValue == player.HandValue)
+      {
+        Console.WriteLine($"{player.Name} ties with Dealer");
         continue;
       }
       if (Dealer.HandValue > 21 && player.HandValue < 21)
@@ -92,6 +106,7 @@ public class BlackjackGame : Game
         winners.Clear();
         maxVictoryCount = player.Victories;
         winners.Add(player);
+        continue;
       }
       winners.Add(player);
     }

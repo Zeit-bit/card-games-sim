@@ -32,6 +32,8 @@ public class UnoGame : Game
 
   public override void Start()
   {
+    ((UnoPlayer)Players[0]).DealCards(4, DrawPile, Players);
+
     for (int playerIndex = 0; Winner == null; playerIndex = GetNextTurn(playerIndex))
     {
       var currentPlayer = Players[playerIndex];
