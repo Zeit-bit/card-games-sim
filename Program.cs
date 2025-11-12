@@ -36,7 +36,18 @@ class Program
       },
       {
         "2",
-        new("Uno", () => new UnoGame([new("Mike"), new("Jaime"), new("Dario"), new("Rizzra")]))
+        new(
+          "Uno",
+          () =>
+            new UnoGame(
+              [
+                new("Mike"),
+                new UnoCalculatingPlayer("Jaime"),
+                new("Dario"),
+                new UnoCalculatingPlayer("Rizzra"),
+              ]
+            )
+        )
       },
     };
 

@@ -15,11 +15,11 @@ public abstract class UnoCard : Card
 
   public enum UnoCardSymbols
   {
-    Number,
+    Draw,
     Skip,
     Reverse,
-    Draw,
     Wild,
+    Number,
   }
 
   public int? Value { get; set; } = null;

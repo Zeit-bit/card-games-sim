@@ -38,16 +38,29 @@ public class UnoPlayer : Player, IShuffler, IDealer
     if (cardToPlay is null)
     {
       Console.WriteLine($"{Name} draws a card");
-      DrawFromPile(unoGame);
+      var cardDrawed = DrawFromPile(unoGame);
+      if (ShouldPlayDrawedCard(cardDrawed, cardToMatch, unoGame))
+        cardDrawed.Play(unoGame);
       return;
     }
 
     cardToPlay.Play(unoGame);
   }
 
+  protected virtual bool ShouldPlayDrawedCard(UnoCard cardDrawed, UnoCard cardToMatch, UnoGame game)
+  {
+    if (CardMatches(cardDrawed, cardToMatch, game))
+      return true;
+    return false;
+  }
+
   protected bool VictimToDrawCard(UnoCard[] matchingCards, UnoCard cardToMatch, UnoGame unoGame)
   {
-    if (matchingCards.Length == 0 && cardToMatch.CardSymbol == UnoCard.UnoCardSymbols.Draw)
+    if (
+      matchingCards.Length == 0
+      && cardToMatch.CardSymbol == UnoCard.UnoCardSymbols.Draw
+      && unoGame.AccumulatedDrawCount > 0
+    )
     {
       Console.WriteLine($"{Name} draws {unoGame.AccumulatedDrawCount} cards");
       for (int i = 0; i < unoGame.AccumulatedDrawCount; i++)
@@ -62,34 +75,31 @@ public class UnoPlayer : Player, IShuffler, IDealer
 
   protected UnoCard[] GetMatchingCardsFromHand(UnoCard cardToMatch, UnoGame game)
   {
-    return Hand.OfType<UnoCard>()
-      .Where(card =>
-      {
-        if (
-          card.CardSymbol != UnoCard.UnoCardSymbols.Draw
-          && cardToMatch.CardSymbol == UnoCard.UnoCardSymbols.Draw
-          && game.AccumulatedDrawCount > 0
-        )
-          return false;
+    return Hand.OfType<UnoCard>().Where(card => CardMatches(card, cardToMatch, game)).ToArray();
+  }
 
-        if (
-          card.CardColor == cardToMatch.CardColor
-          || card.CardSymbol == UnoCard.UnoCardSymbols.Wild
-        )
-          return true;
+  protected bool CardMatches(UnoCard card, UnoCard cardToMatch, UnoGame game)
+  {
+    if (
+      card.CardSymbol != UnoCard.UnoCardSymbols.Draw
+      && cardToMatch.CardSymbol == UnoCard.UnoCardSymbols.Draw
+      && game.AccumulatedDrawCount > 0
+    )
+      return false;
 
-        if (card.CardSymbol == UnoCard.UnoCardSymbols.Number && cardToMatch.Value == card.Value)
-          return true;
+    if (card.CardColor == cardToMatch.CardColor || card.CardSymbol == UnoCard.UnoCardSymbols.Wild)
+      return true;
 
-        if (
-          card.CardSymbol == cardToMatch.CardSymbol
-          && card.CardSymbol != UnoCard.UnoCardSymbols.Number
-        )
-          return true;
+    if (card.CardSymbol == UnoCard.UnoCardSymbols.Number && cardToMatch.Value == card.Value)
+      return true;
 
-        return false;
-      })
-      .ToArray();
+    if (
+      card.CardSymbol == cardToMatch.CardSymbol
+      && card.CardSymbol != UnoCard.UnoCardSymbols.Number
+    )
+      return true;
+
+    return false;
   }
 
   protected UnoCard DrawFromPile(UnoGame unoGame)
