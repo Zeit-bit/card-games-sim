@@ -1,5 +1,3 @@
-using System;
-
 namespace card_games_sim.Cards.Poker;
 
 public class NumericPokerCard : PokerStandardCard

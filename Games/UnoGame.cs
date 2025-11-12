@@ -28,10 +28,13 @@ public class UnoGame : Game
   public int AccumulatedDrawCount { get; set; }
 
   public UnoGame(UnoPlayer[] players)
+    : this(players, DeckManager.CreateStandardUnoDeck()) { }
+
+  public UnoGame(UnoPlayer[] players, Deck drawPileDeck)
   {
     Direction = 1;
     Players = players;
-    DrawPile = DeckManager.CreateStandardUnoDeck();
+    DrawPile = drawPileDeck;
     DeckManager.ShuffleCards(DrawPile);
     DiscardPile = new Deck();
   }
@@ -55,6 +58,7 @@ public class UnoGame : Game
         Winner = currentPlayer;
     }
 
+    Console.WriteLine("\n------------------------");
     Console.WriteLine($"Winner: {Winner.Name}");
   }
 

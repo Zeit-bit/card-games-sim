@@ -1,7 +1,5 @@
-using card_games_sim.Cards;
 using card_games_sim.Cards.Poker;
 using card_games_sim.Games;
-using card_games_sim.Games.Rulesets;
 using card_games_sim.Interfaces;
 
 namespace card_games_sim.Players;
