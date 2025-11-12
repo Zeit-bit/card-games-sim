@@ -39,13 +39,16 @@ public class BlackjackGame : Game
   public BlackjackCardValueRule RuleSet { get; private init; }
 
   public BlackjackGame(int rounds, BlackjackPlayer[] players)
+    : this(rounds, players, DeckManager.CreateStandardPokerDeck()) { }
+
+  public BlackjackGame(int rounds, BlackjackPlayer[] players, Deck deck)
   {
     Rounds = rounds;
     Players = players;
     Dealer = new BlackjackDealer("Dealer");
     CurrentRound = 1;
     RuleSet = new BlackjackCardValueRule();
-    Deck = DeckManager.CreateStandardPokerDeck();
+    Deck = deck;
   }
 
   public override void Start()
@@ -115,6 +118,13 @@ public class BlackjackGame : Game
     }
 
     Console.WriteLine("----------Winners:----------");
+
+    if (maxVictoryCount == 0)
+    {
+      Console.WriteLine("There are no winners");
+      return;
+    }
+
     foreach (var winner in winners)
     {
       Console.WriteLine($"{winner.Name} -> {winner.Victories} wins");
