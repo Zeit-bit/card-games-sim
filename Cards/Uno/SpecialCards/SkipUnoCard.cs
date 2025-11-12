@@ -1,21 +1,24 @@
-using System;
 using card_games_sim.Games;
+using card_games_sim.Players;
 
 namespace card_games_sim.Cards.Uno.SpecialCards
 {
   public class SkipUnoCard : SpecialUnoCard
   {
     public SkipUnoCard(UnoCardColors color)
-      : base(color, UnoSpecialTypes.Reverse) { }
+      : base(color, UnoCardSymbols.Skip) { }
 
     public override string Name
     {
       get { return $"Skip {CardColor}"; }
     }
 
-    public override void ApplySpecialEffect(Game game)
+    public override void ApplySpecialEffect(UnoGame game)
     {
-      throw new System.NotImplementedException();
+      Console.WriteLine("Blocking the next player turn");
+      int nextPlayerIndex = game.GetNextTurn(game.CurrentPlayerIndex);
+      var nextPlayer = (UnoPlayer)game.Players[nextPlayerIndex];
+      nextPlayer.Blocked = true;
     }
   }
 }

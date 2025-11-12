@@ -1,4 +1,3 @@
-using System;
 using card_games_sim.Games;
 
 namespace card_games_sim.Cards.Uno.SpecialCards
@@ -6,21 +5,19 @@ namespace card_games_sim.Cards.Uno.SpecialCards
   public class WildUnoCard : SpecialUnoCard
   {
     public WildUnoCard()
-      : base(UnoCardColors.Wild, UnoSpecialTypes.Reverse) { }
+      : base(UnoCardColors.Wild, UnoCardSymbols.Wild) { }
 
     public override string Name
     {
-      get { return $"Wild"; }
+      get { return $"Wild Card : last color used {CardColor}"; }
     }
 
-    public override bool Matches(UnoCard other)
+    public override void ApplySpecialEffect(UnoGame game)
     {
-      return true;
-    }
-
-    public override void ApplySpecialEffect(Game game)
-    {
-      throw new System.NotImplementedException();
+      int rnd = Random.Shared.Next(0, 4);
+      var color = (UnoCardColors)rnd;
+      Console.WriteLine($"Choosing color: {color}");
+      CardColor = color;
     }
   }
 }
