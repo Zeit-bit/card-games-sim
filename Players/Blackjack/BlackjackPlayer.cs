@@ -23,7 +23,7 @@ public class BlackjackPlayer : Player
     foreach (var card in Hand)
     {
       if (card is not PokerCard pokerCard)
-        throw new Exception("Blackjack solo usa PokerCards.");
+        throw new Exception("Blackjack only uses PokerCards.");
 
       int value = rule.GetCardValue(pokerCard);
       total += value;
@@ -45,6 +45,7 @@ public class BlackjackPlayer : Player
   public override void Play(Game game)
   {
     CalculateHandValue(((BlackjackGame)game).RuleSet);
+    PrintPlayerInfo();
 
     while (ShouldPlay)
     {
@@ -65,10 +66,21 @@ public class BlackjackPlayer : Player
     ShouldPlay = true;
   }
 
+  protected void PrintPlayerInfo()
+  {
+    Console.WriteLine();
+    Console.WriteLine($"{Name}'s turn");
+    Console.WriteLine($"Cards:");
+    foreach (var card in Hand)
+    {
+      Console.WriteLine(card.Name);
+    }
+  }
+
   protected void Play(int pointOfCut, Game game)
   {
     CalculateHandValue(((BlackjackGame)game).RuleSet);
-
+    PrintPlayerInfo();
     while (ShouldPlay)
     {
       if (HandValue > 21)
@@ -88,14 +100,15 @@ public class BlackjackPlayer : Player
 
   protected void Hit(BlackjackGame blackjackGame)
   {
-    Console.WriteLine($"{Name} hits");
+    var beforeHitting = HandValue;
     AddCardToHand(blackjackGame.Deck.Cards.Pop());
     CalculateHandValue(blackjackGame.RuleSet);
+    Console.WriteLine($"{Name} hits: {beforeHitting} -> {HandValue}");
   }
 
   protected void Stand()
   {
-    Console.WriteLine($"{Name} stands");
+    Console.WriteLine($"{Name} stands at {HandValue}");
     ShouldPlay = false;
   }
 }
