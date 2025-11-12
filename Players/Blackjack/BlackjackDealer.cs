@@ -49,12 +49,14 @@ public class BlackjackDealer : BlackjackPlayer, IShuffler, IDealer
         card.FaceUp = true;
       deck.Cards.Push(card);
     }
+    Hand.Clear();
     foreach (var player in players)
     {
       foreach (var card in player.Hand)
       {
         deck.Cards.Push(card);
       }
+      player.Hand.Clear();
     }
   }
 }

@@ -44,13 +44,14 @@ public class BlackjackGame : Game
     Dealer = new BlackjackDealer("Dealer");
     CurrentRound = 1;
     RuleSet = new BlackjackCardValueRule();
+    Deck = PokerDeckBuilder.CreateStandardPokerDeck();
   }
 
   public override void Start()
   {
     while (CurrentRound <= Rounds)
     {
-      Console.WriteLine($"Round: {CurrentRound}");
+      Console.WriteLine($"----------Round: {CurrentRound}----------");
       Dealer.ShuffleCards(Deck);
       Dealer.DealCards(2, Deck, Players);
       foreach (var player in Players)
@@ -61,13 +62,14 @@ public class BlackjackGame : Game
       RoundPayout();
       Dealer.RetriveCards(Deck, Players);
       CurrentRound++;
+      Console.WriteLine();
     }
     ShowWinner();
   }
 
   private void RoundPayout()
   {
-    Console.WriteLine("Assigning payouts");
+    Console.WriteLine("----------Assigning payouts----------");
     foreach (var player in (BlackjackPlayer[])Players)
     {
       if (player.HandValue > 21)
@@ -111,10 +113,10 @@ public class BlackjackGame : Game
       winners.Add(player);
     }
 
-    Console.WriteLine("Winners:");
+    Console.WriteLine("----------Winners:----------");
     foreach (var winner in winners)
     {
-      Console.WriteLine(winner.Name);
+      Console.WriteLine($"{winner.Name} -> {winner.Victories} wins");
     }
   }
 }
