@@ -1,10 +1,9 @@
 using System;
 using card_games_sim.Games;
-using card_games_sim.Interfaces;
 
 namespace card_games_sim.Cards.Uno.SpecialCards;
 
-public abstract class SpecialUnoCard : UnoCard, ISpecialCard
+public abstract class SpecialUnoCard : UnoCard
 {
   public enum UnoSpecialTypes
   {
