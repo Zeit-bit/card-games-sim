@@ -17,7 +17,7 @@ public class DrawCard : SpecialUnoCard
   }
   private string GetColorString
   {
-    get { return DrawCount == 2 ? CardColor.ToString() : ""; }
+    get { return DrawCount == 2 ? CardColor.ToString() : $": last color used {CardColor}"; }
   }
 
   private UnoCardColors InitialColor { get; set; }
