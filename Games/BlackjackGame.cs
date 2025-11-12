@@ -1,13 +1,14 @@
 using card_games_sim.Cards;
 using card_games_sim.Games.Rulesets;
 using card_games_sim.Players;
+using card_games_sim.Utils;
 
 namespace card_games_sim.Games;
 
 public class BlackjackGame : Game
 {
   private BlackjackPlayer[] _players;
-  protected override Player[] Players
+  public override Player[] Players
   {
     get { return _players; }
     init
@@ -44,7 +45,7 @@ public class BlackjackGame : Game
     Dealer = new BlackjackDealer("Dealer");
     CurrentRound = 1;
     RuleSet = new BlackjackCardValueRule();
-    Deck = PokerDeckBuilder.CreateStandardPokerDeck();
+    Deck = DeckManager.CreateStandardPokerDeck();
   }
 
   public override void Start()

@@ -1,42 +1,22 @@
-using System;
 using card_games_sim.Games;
 
 namespace card_games_sim.Cards.Uno.SpecialCards;
 
 public abstract class SpecialUnoCard : UnoCard
 {
-  public enum UnoSpecialTypes
-  {
-    Reverse,
-    Skip,
-    DrawTwo,
-    DrawFour,
-    Wild,
-  }
-
-  public UnoSpecialTypes SpecialType { get; init; }
-
-  protected SpecialUnoCard(UnoCardColors color, UnoSpecialTypes specialType)
+  protected SpecialUnoCard(UnoCardColors color, UnoCardSymbols specialSymbol)
     : base(color)
   {
-    SpecialType = specialType;
+    if (specialSymbol == UnoCardSymbols.Number)
+      throw new Exception("A numeric card can't be special");
+    CardSymbol = specialSymbol;
   }
 
-  public override bool Matches(UnoCard other) //true if same color or same type
+  public abstract void ApplySpecialEffect(UnoGame game);
+
+  public sealed override void Play(UnoGame game)
   {
-    if (this.CardColor == other.CardColor)
-      return true;
-
-    if (other is SpecialUnoCard special && special.SpecialType == this.SpecialType)
-      return true;
-
-    return false;
+    DiscardCard(game);
+    ApplySpecialEffect(game);
   }
-
-  public override void Play() //Check if matches -> Place -> ApplySpecialEffect
-  {
-    throw new System.NotImplementedException();
-  }
-
-  public abstract void ApplySpecialEffect(Game game);
 }
